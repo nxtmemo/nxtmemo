@@ -1,5 +1,7 @@
 <?php
 
+require_once('protected/vendor/lib_autolink.php');
+
 class SiteController extends Controller
 {
     /**

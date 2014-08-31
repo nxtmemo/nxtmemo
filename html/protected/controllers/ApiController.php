@@ -1,6 +1,6 @@
 <?php
 
-class CronController extends Controller
+class ApiController extends Controller
 {
 
     /**
@@ -22,8 +22,8 @@ class CronController extends Controller
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
                 'actions' => array('index'),
-                //Only localhost can start cronjob
-                'ips' => array('127.0.0.1'),
+                //Limit API access by IP
+                'ips' => array('*'),
             ),
             array('deny', // deny all users
                 'ips' => array('*'),
@@ -37,20 +37,26 @@ class CronController extends Controller
 
 		$key = CHttpRequest::getParam('key', '');
 
-		if($key !== Yii::app()->params['cronKey']) {
+		if($key !== Yii::app()->params['apiKey']) {
                         echo "Not allowed";
 			exit;
 		}
 
-		$index=Params::model()->findByPk('tx_firstIndex');
+		$method = CHttpRequest::getParam('method', '');
+
+		/* update is the only method so far */
+                if($method != "update") {
+			echo "Request unknown";
+			exit;
+		}
 
 		$url = Yii::app()->params['nxt_prot'] . '://' . Yii::app()->params['nxt_host'] . ':' . Yii::app()->params['nxt_port'] . '/nxt?';  
 
 		$query = array();
 		$query['requestType'] = 'getAccountTransactions';
 		$query['account'] = Yii::app()->params['nxt_account'];
-		$query['firstIndex'] = $index->attributes['value'];
-		$query['lastIndex'] = '999999999';
+		$query['firstIndex'] = '0';
+		$query['lastIndex'] = Yii::app()->params['lastIndex'];
 		$query['type'] = '1';
 		$query['subtype'] = '0';
 		$ch = curl_init($url . http_build_query($query));
@@ -60,25 +66,29 @@ class CronController extends Controller
                 $result = curl_exec($ch);
                 curl_close($ch);
 
+                print_r($result);
+
+
 		$array = json_decode($result);
 
 		$memos = array();
 
 
-		if(!isset($array->transactions)) {
+		if(empty($array->transactions)) {
 		    echo "No transactions found";
 		    exit;
 		}
 
-		//Update firstIndex
-		if(count($array->transactions) > 0) {
-		    $newindex = $index->attributes['value'] + count($array->transactions);
-		    $index->updateByPk('tx_firstIndex', array('value'=>$newindex));
-		}
-
-
 
 		foreach($array->transactions as $tx) {
+
+                        $memo = Memos::model()->findByPk($tx->transaction);
+
+                        if($memo) {
+                                echo "Transaction already in DB<br/>";
+                                continue;
+                        }
+
 
   			$message = isset($tx->attachment->message) ? $tx->attachment->message : '';
 
@@ -90,7 +100,7 @@ class CronController extends Controller
 
 			if($tx->recipientRS == Yii::app()->params['nxt_account'] && !empty($message) && mb_detect_encoding($message, "ASCII, UTF-8") !== FALSE) {
 
-				$memo = new Memos();
+ 				$memo = new Memos();
 				$memo->txid = $tx->transaction;
                 		$memo->account = $tx->senderRS;
 				$memo->timestamp = $tx->timestamp + Yii::app()->params['nxt_genesistime'];

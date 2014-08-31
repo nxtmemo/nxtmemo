@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `tbl_params` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- --------------------------------------------------------
 
 --

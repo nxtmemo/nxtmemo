@@ -18,7 +18,7 @@ return array(
 		'application.vendors.*',
 	),
 
-    /* Application name */
+	/* Application name */
 	'name'=>'NXTMemo',
 
 	// application-level parameters that can be accessed
@@ -33,10 +33,10 @@ return array(
 
 		/*
 		 *     Cronjob example
-		 *     * * * * * wget http://url-to-nxtmemo.com/cron?key=<cronKey>
+		 *     * * * * * wget "http://url-to-nxtmemo.com/api?method=update&key=<apiKey>"
 		 */
-		'cronKey'=>'Put-your-secret-key-here',
-		
+		'apiKey'=>'Put-your-secret-key-here',
+
 		/*
 		 * NXT options
 		 */
@@ -47,11 +47,12 @@ return array(
 		'nxt_alias'=>'youralias',
 		'nxt_token_website'=>'http://yourwebsite.com',
 		'nxt_genesistime'=>1385298000, // this is a constant
+		'nxt_msglimit'=>'50',//poll API for latest 50 messages
 	),
 
 	// application components
 	'components'=>array(
-		
+
 		/* Database settinigs */
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=nxtmemo',
@@ -60,7 +61,7 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 		),
-				
+
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
@@ -70,16 +71,16 @@ return array(
                 'acc/<a>'=>'site/index',
                 'txid/<t>'=>'site/index',
                 'alias/<alias>'=>'site/index',
-                'cron'=>'cron/index',
+                'api'=>'api/index',
                 '/'=>'site/index',
 			),
 		),
-				
+
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>false,
 		),
-				
+
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
@@ -103,13 +104,13 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		
+
 		/*'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'Enter Your Password Here',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),*/
-		
+
 	),
 );
