@@ -7,7 +7,7 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	
+
 	public $token;
 	/**
 	 * Authenticates a user.
@@ -24,52 +24,48 @@ class UserIdentity extends CUserIdentity
 			'demo'=>'demo',
 			'admin'=>'admin',
 		);
-		
-		echo $this->token;
-		
-		//$this->token = $token;
-		
+
+
 		$url = Yii::app()->params['nxt_prot'] . '://' . Yii::app()->params['nxt_host'] . ':' . Yii::app()->params['nxt_port'] . '/nxt?';  
-		
+
 		$query = array();
 		$query['requestType'] = 'decodeToken';
-		$query['token'] = $this->token;		
+		$query['token'] = $this->token;
 		$query['website'] = Yii::app()->params['nxt_token_website'];
 		$ch = curl_init($url . http_build_query($query));
-        
+
         curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec($ch);
         curl_close($ch);
-        
+
 		//print_r($result);
 		$obj = json_decode($result);
-		
-		
+
+
 		if(!isset($obj->errorCode) && $obj->valid == 'true') {
-			
+
 			if(($obj->timestamp + Yii::app()->params['nxt_genesistime']) > (time() - Yii::app()->params['tokenMaxAge'])) {
-					
+
 				$this->setState('name', $obj->accountRS);
-					
+
 				//try to load model with available id i.e. unique key
-				$user = Users::model()->findByPk($obj->accountRS);  
-				
+				$user = Users::model()->findByPk($obj->accountRS);
+
 				//now check if the model is null
 				if(!$user) $user = new Users();
-				
+
 				$user->accountRS = $obj->accountRS;
 				$user->login_timestamp = ($obj->timestamp + Yii::app()->params['nxt_genesistime']);
-				
+
 				//save
-				$user->save();	
-					
-					
-				return true;	
+				$user->save();
+
+				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 }

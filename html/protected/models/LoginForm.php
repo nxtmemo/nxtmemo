@@ -74,8 +74,6 @@ class LoginForm extends CFormModel
 			$this->_identity=new UserIdentity();
 			$this->_identity->token = $this->token;
 
-			echo $this->_identity->token;
-
 			if($this->_identity->authenticate()) {
 
 				Yii::app()->user->login($this->_identity,0);

@@ -10,5 +10,5 @@ html/protected/config/main.php
 
 4. Create cronjob
 
-* * * * * wget http://url-to-nxtmemo.com/cron?key=<cronKey>
+* * * * * wget "http://url-to-nxtmemo.com/api?method=update&key=<apiKey>"
 
