@@ -45,11 +45,9 @@ class Users extends CActiveRecord
 
 		if($this->alias) {
 			$this->aliases[$this->alias] = $this->alias;
-			$this->aliases[0] = 'No alias';
-		} else {
-			$this->aliases[0] = 'No alias';
 		}
 
+		$this->aliases[0] = 'No alias - ' . $this->accountRS;
 
 		$url = Yii::app()->params['nxt_prot'] . '://' . Yii::app()->params['nxt_host'] . ':' . Yii::app()->params['nxt_port'] . '/nxt?';  
 

@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index','page','login','logout'),
+                'actions' => array('index','page','login','logout','error'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'panel' action

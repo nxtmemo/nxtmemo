@@ -36,8 +36,7 @@ $this->pageTitle=Yii::app()->name . ' - FAQ';
 <p>The blockchain is a database maintained by a network of countless nodes (computers) verifying each others contents, so your messages cannot be censored or retroactively edited - not by us or even yourself.</p>
 <hr/>
 <h4><a name="opensource">Is this project open source?</a></h4>
+<p>Yes! You can find the source code at <a href="https://github.com/nxtmemo/nxtmemo">https://github.com/nxtmemo/nxtmemo</a></p>
 <hr/>
 <h4><a name="nxtmemo">Where can I find out more about NXTMemo?</a></h4>
-
-<p>This is a "static" page. You may change the content of this page
-by updating the file <code><?php echo __FILE__; ?></code>.</p>
+<p>Contact <code>mail@nxtmemo.com</code>.</p>
