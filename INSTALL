@@ -1,0 +1,14 @@
+1. Import database schema
+
+html/protected/data/schema.sql
+
+2. Configure application
+
+html/protected/config/main.php
+
+3. Point your webserver / vhost to html folder
+
+4. Create cronjob
+
+* * * * * wget http://url-to-nxtmemo.com/cron?key=<cronKey>
+
