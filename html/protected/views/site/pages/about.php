@@ -15,8 +15,8 @@ $this->pageTitle=Yii::app()->name . ' - FAQ';
 <hr/>
 <h4><a name="usage">How do I use this?</a></h4>
 <p>Use the messaging feature in your NXT client and send a message to <b><?php echo Yii::app()->params['nxt_account']; ?></b>.</p>
-<p>Words starting with a hastag (#) will be turned into links to a search.</p>
-<p>Words starting with an at-sign (@) will be turned into links to an alias.</p>
+<p>Words starting with a hastag (#) link to a search query.</p>
+<p>Words starting with an at-sign (@) link to an alias.</p>
 <p>Please note messages need to be sent <strong>unencrypted</strong>.</p>
 <img src="<?php echo $this->createURL('/'); ?>/images/encryptmessage.png" />
 <hr/>
