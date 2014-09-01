@@ -34,16 +34,16 @@ class UserIdentity extends CUserIdentity
 		$query['website'] = Yii::app()->params['nxt_token_website'];
 		$ch = curl_init($url . http_build_query($query));
 
-        curl_setopt($ch, CURLOPT_HEADER, 0);
+	        curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($ch);
-        curl_close($ch);
+        	$result = curl_exec($ch);
+	        curl_close($ch);
 
 		//print_r($result);
 		$obj = json_decode($result);
 
 
-		if(!isset($obj->errorCode) && $obj->valid == 'true') {
+		if($result && !isset($obj->errorCode) && $obj->valid == 'true') {
 
 			if(($obj->timestamp + Yii::app()->params['nxt_genesistime']) > (time() - Yii::app()->params['tokenMaxAge'])) {
 

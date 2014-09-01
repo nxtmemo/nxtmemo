@@ -15,8 +15,8 @@ foreach ($memos as $memo) {
 	$memo['message'] =  mb_convert_encoding($memo['message'], 'UTF-8', 'UTF-8');
         $memo['message'] = htmlentities($memo['message'], ENT_QUOTES, 'UTF-8');
 
-        $memo['message'] = preg_replace('/(\#)([^\s]+)/', '<a href="' . $url . '/tag/$2">$2</a>', $memo['message']);
-	$memo['message'] = preg_replace('/(\@)([^\s]+)/', '<a href="' . $url . '/alias/$2">$2</a>', $memo['message']);
+        $memo['message'] = preg_replace('/(\#)([^\s]+)/', '<a href="' . $url . '/tag/$2">#$2</a>', $memo['message']);
+	$memo['message'] = preg_replace('/(\@)([^\s]+)/', '<a href="' . $url . '/alias/$2">@$2</a>', $memo['message']);
 
 	$memo['message'] = autolink($memo['message'], 20);
 
