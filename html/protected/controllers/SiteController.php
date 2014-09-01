@@ -68,6 +68,7 @@ class SiteController extends Controller
 		$acc = CHttpRequest::getParam('a', '');
 		$tx = CHttpRequest::getParam('t', '');
 		$alias = CHttpRequest::getParam('alias', '');
+		$suffix = '';
 
 		$page = (int) CHttpRequest::getParam('page', 1);
 
@@ -78,21 +79,33 @@ class SiteController extends Controller
 
 		if($tx) {
 
-        		$memos->where("txid = :tx", array(':tx'=>$tx));
+        	    $memos->where("txid = :tx", array(':tx'=>$tx));
+		    $suffix = $tx;
 
 		} else if($search) {
 
 		    $memos->where("message LIKE '%' :tag '%' OR tags LIKE '%' :tag '%' OR account LIKE '%' :tag '%' OR alias LIKE '%' :tag '%'", array(':tag'=>$search));	
+                    $suffix = $search;
+
 
 		} else if($acc) {
 
 		    $memos->where("account = :acc", array(':acc'=>$acc));
+                    $suffix = $acc;
+
 
 		} else if($alias) {
 
 		    $memos->where("alias LIKE '%' :alias '%' OR message LIKE '%' :alias '%' OR tags LIKE '%' :alias '%'", array(':alias'=>$alias));
+                    $suffix = $alias;
 		}
 
+
+		$title = Yii::app()->name;
+
+		if($suffix) {
+			$title .= ' - ' . $suffix;
+		}
 
 		$memos->order('timestamp DESC');
 
@@ -107,7 +120,7 @@ class SiteController extends Controller
 			$paginate = $page + 1;
 		}
 
-		$this->render('index',array('memos'=>$result,'paginate'=>$paginate,'page'=>$page));
+		$this->render('index',array('memos'=>$result,'paginate'=>$paginate,'page'=>$page,'title'=>$title));
 	}
 
 	/**

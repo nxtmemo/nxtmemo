@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 
-$this->pageTitle=Yii::app()->name;
+$this->pageTitle=$title;//Yii::app()->name . ' - Login';
 
 foreach ($memos as $memo) {
 

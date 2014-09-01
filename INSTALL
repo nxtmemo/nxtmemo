@@ -6,9 +6,9 @@ html/protected/data/schema.sql
 
 html/protected/config/main.php
 
-3. Point your webserver / vhost to html folder
+3. Set your webserver / vhost to html folder
 
 4. Create cronjob
-
+(Example)
 * * * * * wget "http://url-to-nxtmemo.com/api?method=update&key=<apiKey>"
 
