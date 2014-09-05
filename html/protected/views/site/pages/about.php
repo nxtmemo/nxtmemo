@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 
-$this->pageTitle=Yii::app()->name . ' - FAQ';
+$this -> pageTitle = Yii::app() -> name . ' - FAQ';
 ?>
 <h3>Frequently asked questions</h3>
 
@@ -14,16 +14,16 @@ $this->pageTitle=Yii::app()->name . ' - FAQ';
 
 <hr/>
 <h4><a name="usage">How do I use this?</a></h4>
-<p>Use the messaging feature in your NXT client and send a message to <b><?php echo Yii::app()->params['nxt_account']; ?></b>.</p>
+<p>Use the messaging feature in your NXT client and send a message to <b><?php echo Yii::app() -> params['nxt_account']; ?></b>.</p>
 <p>Words starting with a hastag (#) link to a search query.</p>
 <p>Words starting with an at-sign (@) link to an alias.</p>
 <p>Please note messages need to be sent <strong>unencrypted</strong>.</p>
-<img src="<?php echo $this->createURL('/'); ?>/images/encryptmessage.png" />
+<img src="<?php echo $this -> createURL('/'); ?>/images/encryptmessage.png" />
 <hr/>
 <h4><a name="token">How do I generate a token?</a></h4>
 <p>A NXT token is required to login.</p>
-<img src="<?php echo $this->createURL('/'); ?>/images/tokenmenu.png" /><br/>
-<img src="<?php echo $this->createURL('/'); ?>/images/generatetoken.png" />
+<img src="<?php echo $this -> createURL('/'); ?>/images/tokenmenu.png" /><br/>
+<img src="<?php echo $this -> createURL('/'); ?>/images/generatetoken.png" />
 <hr/>
 <h4><a name="nxt">What is NXT and where can I get it?</a></h4>
 <p>NXT is a second generation cryptocurrency. It is basically like Bitcoin but much more advanced!</p>
@@ -40,3 +40,4 @@ $this->pageTitle=Yii::app()->name . ' - FAQ';
 <hr/>
 <h4><a name="nxtmemo">Where can I find out more about NXTMemo?</a></h4>
 <p>Contact <code>mail@nxtmemo.com</code>.</p>
+<p>Thread on nxtforum.org: <a href="https://nxtforum.org/general-discussion/nxtmemo-twitter-clone-based-on-nxt-messaging-system/">https://nxtforum.org/general-discussion/nxtmemo-twitter-clone-based-on-nxt-messaging-system/</a></p>

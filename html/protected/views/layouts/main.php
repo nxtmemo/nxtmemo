@@ -5,15 +5,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app() -> request -> baseUrl; ?>/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app() -> request -> baseUrl; ?>/css/form.css" />
+	
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<title><?php echo CHtml::encode($this -> pageTitle); ?></title>
 </head>
 
 <body>
@@ -21,22 +23,23 @@
 <div class="container" id="page">
 
 	
-		<div id="logo"><a href="<?php echo $this->createURL('site/index'); ?>"><?php echo CHtml::encode(Yii::app()->name); ?></a></div>
+		<div id="logo"><a href="<?php echo $this -> createURL('site/index'); ?>"><?php echo CHtml::encode(Yii::app() -> name); ?></a></div>
 		<div id="menu">
-			<a href="<?php echo $this->createURL('site/panel'); ?>">[My account]</a>
-			<a href="<?php echo $this->createURL('/site/page', array('view'=>'about')); ?>">[FAQ]</a>
+			<a href="<?php echo $this -> createURL('site/panel'); ?>">[My account]</a>
+			<a href="<?php echo $this -> createURL('site/page', array('view' => 'setup')); ?>">[Alias setup]</a>
+			<a href="<?php echo $this -> createURL('/site/page', array('view' => 'about')); ?>">[FAQ]</a>
 		    <?php if(!Yii::app()->user->isGuest) { ?>
-		    <a href="<?php echo $this->createURL('site/logout'); ?>">[Logout]</a>	
+		    <a href="<?php echo $this -> createURL('site/logout'); ?>">[Logout]</a>	
 		    <?php } ?>
 		</div>
 		<div class="clearfix"></div>
-		<div style="text-align:center;">Send your messages to <?php echo Yii::app()->params['nxt_account']; ?> (alias <a href="<?php echo $this->createURL('site/index',array('alias'=>Yii::app()->params['nxt_alias'])); ?>"><?php echo Yii::app()->params['nxt_alias']; ?></a>)</div>
-	 <form action="<?php echo $this->createURL('site/index'); ?>" method="POST">
+		<div style="text-align:center;">Send your messages to <?php echo Yii::app() -> params['nxt_account']; ?> (alias <a href="<?php echo $this -> createURL('site/index', array('alias' => Yii::app() -> params['nxt_alias'])); ?>"><?php echo Yii::app() -> params['nxt_alias']; ?></a>)</div>
+	 <form action="<?php echo $this -> createURL('site/index'); ?>" method="POST">
 	    <div class="input-group" style="margin:25px;">
 	    	
 	    	<?php
-	    	$value = CHttpRequest::getParam('t', '');
-	    	$value = CHttpRequest::getParam('s', '');
+			$value = CHttpRequest::getParam('t', '');
+			$value = CHttpRequest::getParam('s', '');
 			$value = CHttpRequest::getParam('a', $value);
 			$value = CHttpRequest::getParam('alias', $value);
 			?>
@@ -53,10 +56,8 @@
 	
 
 	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+		<?php $this -> widget('zii.widgets.CBreadcrumbs', array('links' => $this -> breadcrumbs, )); ?><!-- breadcrumbs -->
+	<?php endif ?>
 
 	<?php echo $content; ?>
 

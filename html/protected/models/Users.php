@@ -8,95 +8,105 @@
  * @property string $alias
  * @property integer $login_timestamp
  */
-class Users extends CActiveRecord
-{
+class Users extends CActiveRecord {
 	public $aliases;
+	public $aliasData;
+
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
+	public function tableName() {
 		return 'tbl_users';
 	}
 
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
+	public function rules() {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('accountRS, login_timestamp', 'required'),
-			array('login_timestamp', 'numerical', 'integerOnly'=>true),
-			array('accountRS', 'length', 'max'=>25),
-			array('alias', 'length', 'max'=>1000),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('accountRS, alias, login_timestamp', 'safe', 'on'=>'search'),
-		);
+		return array( array('accountRS, login_timestamp', 'required'), array('login_timestamp', 'numerical', 'integerOnly' => true), array('accountRS', 'length', 'max' => 25), array('alias', 'length', 'max' => 1000),
+		// The following rule is used by search().
+		// @todo Please remove those attributes that should not be searched.
+		array('accountRS, alias, login_timestamp', 'safe', 'on' => 'search'), );
 	}
-
-
 
 	public function getAliases() {
 
-		$this->aliases = array();
+		$this -> aliases = array();
 
-		if($this->alias) {
-			$this->aliases[$this->alias] = $this->alias;
+		if ($this -> alias) {
+			$this -> aliases[$this -> alias] = $this -> alias;
 		}
 
-		$this->aliases[0] = 'No alias - ' . $this->accountRS;
+		$this -> aliases[0] = 'No alias - ' . $this -> accountRS;
 
-		$url = Yii::app()->params['nxt_prot'] . '://' . Yii::app()->params['nxt_host'] . ':' . Yii::app()->params['nxt_port'] . '/nxt?';  
+		$url = Yii::app() -> params['nxt_prot'] . '://' . Yii::app() -> params['nxt_host'] . ':' . Yii::app() -> params['nxt_port'] . '/nxt?';
 
 		$query = array();
 		$query['requestType'] = 'getAliases';
-		$query['account'] = $this->accountRS;
+		$query['account'] = $this -> accountRS;
 
 		$ch = curl_init($url . http_build_query($query));
 
-        curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($ch);
-        curl_close($ch);
+		$result = curl_exec($ch);
+		curl_close($ch);
 
 		$array = json_decode($result);
 
 		foreach ($array->aliases as $alias) {
 
-			if($alias->aliasName != $this->alias) {
-				$this->aliases[$alias->aliasName] = $alias->aliasName;
+			if ($alias -> aliasName != $this -> alias) {
+				$this -> aliases[$alias -> aliasName] = $alias -> aliasName;
 			}
 		}
 
-		return $this->aliases;
+		return $this -> aliases;
 
 	}
 
+	public function getAliasData() {
+
+		$this -> aliasData = array();
+
+		$url = Yii::app() -> params['nxt_prot'] . '://' . Yii::app() -> params['nxt_host'] . ':' . Yii::app() -> params['nxt_port'] . '/nxt?';
+
+		$query = array();
+		$query['requestType'] = 'getAlias';
+		$query['aliasName'] = $this -> alias;
+
+		$ch = curl_init($url . http_build_query($query));
+
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+		$array = json_decode($result);
+
+		if (!empty($array) && isset($array -> aliasURI)) {
+			$this -> aliasData = json_decode($array -> aliasURI);
+		}
+
+		return $this -> aliasData;
+	}
 
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
-	{
+	public function relations() {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
+		return array();
 	}
 
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
-		return array(
-			'accountRS' => 'Account Rs',
-			'alias' => 'Alias',
-			'login_timestamp' => 'Login Timestamp',
-		);
+	public function attributeLabels() {
+		return array('accountRS' => 'Account Rs', 'alias' => 'Alias', 'login_timestamp' => 'Login Timestamp', );
 	}
 
 	/**
@@ -111,19 +121,16 @@ class Users extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
-	{
+	public function search() {
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('accountRS',$this->accountRS,true);
-		$criteria->compare('alias',$this->alias,true);
-		$criteria->compare('login_timestamp',$this->login_timestamp);
+		$criteria -> compare('accountRS', $this -> accountRS, true);
+		$criteria -> compare('alias', $this -> alias, true);
+		$criteria -> compare('login_timestamp', $this -> login_timestamp);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		return new CActiveDataProvider($this, array('criteria' => $criteria, ));
 	}
 
 	/**
@@ -132,8 +139,8 @@ class Users extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Users the static model class
 	 */
-	public static function model($className=__CLASS__)
-	{
+	public static function model($className = __CLASS__) {
 		return parent::model($className);
 	}
+
 }

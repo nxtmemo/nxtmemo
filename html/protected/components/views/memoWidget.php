@@ -1,7 +1,7 @@
 <?php
 // protected/components/views/memoWidget.php
 ?>
-<blockquote style="overflow:hidden;margin-bottom:0;">
+<blockquote class="memo">
 <p><?php echo $data['message']; ?></p>
     <footer>
         <cite>
@@ -14,6 +14,6 @@
     </footer>
 </blockquote>
 <?php if(!CHttpRequest::getParam('t')) { ?>
-<div style="margin-bottom:10px;padding-left:25px;"><a href="<?php echo Yii::app()->createURL('site/index',array('t'=>$data['txid'])); ?>"><small>Permalink</small></a></div>
+<div class="permalink"><a href="<?php echo Yii::app()->createURL('site/index',array('t'=>$data['txid'])); ?>"><small>Permalink</small></a></div>
 <?php } ?>
 
