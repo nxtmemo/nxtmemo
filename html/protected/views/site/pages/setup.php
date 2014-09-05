@@ -8,7 +8,7 @@ Yii::app() -> clientScript -> registerScriptFile(Yii::app() -> baseUrl . '/js/al
 <h3>Alias setup</h3>
 
 <p>
-	This form will help you create a profile on NXTMemo. Fill in any info that you are comfortable sharing with everybody.
+	This form will help you create a profile on this site. Fill in any info that you are comfortable sharing with everybody.
 </p>
 <form action="" method="post">
 	<div style="width:50%;float:left;padding-right:30px;">
