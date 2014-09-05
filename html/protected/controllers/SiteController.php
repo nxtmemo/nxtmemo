@@ -57,6 +57,7 @@ class SiteController extends Controller {
 		$memos -> from('tbl_memos');
 
 		$aliasData = array();
+		$user = new Users();
 
 		if ($tx) {
 
@@ -80,9 +81,13 @@ class SiteController extends Controller {
 
 			$user = Users::model() -> findByPk($acc);
 
-			$user -> alias = trim($user -> alias);
-			$user -> getAliasData();
-			$aliasData = $user -> aliasData;
+
+			if($user) {
+
+				$user -> alias = trim($user -> alias);
+				$user -> getAliasData();
+				$aliasData = $user -> aliasData;
+			}
 
 		} else if ($alias) {
 
@@ -113,7 +118,9 @@ class SiteController extends Controller {
 			$paginate = $page + 1;
 		}
 
-		$this -> render('index', array('memos' => $result, 'paginate' => $paginate, 'page' => $page, 'title' => $title, 'aliasData' => $aliasData));
+		$alias = isset($user -> alias) ? $user -> alias : '';
+
+		$this -> render('index', array('memos' => $result, 'paginate' => $paginate, 'page' => $page, 'title' => $title, 'aliasData' => $aliasData, 'alias' => $alias));
 	}
 
 	/**

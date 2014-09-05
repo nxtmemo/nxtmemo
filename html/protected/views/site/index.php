@@ -51,7 +51,7 @@ $this -> pageTitle = $title;
 	<div class="col-md-6">
 		<?php
 		if ($aliasData) {
-			$this -> widget('ProfileWidget', array('data' => $aliasData, ));
+			$this -> widget('ProfileWidget', array('data' => $aliasData, 'alias' => $alias));
 		}
 	?>
 	</div>

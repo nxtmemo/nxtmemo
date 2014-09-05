@@ -1,24 +1,29 @@
 <?php
 // protected/components/views/profileWidget.php
 
-$data = json_decode($data);
-
 if (isset($data -> photo_url)) {
 	echo '<img class="profilePhoto" src="' . Helper::htmlOutput($data -> photo_url, false) . '" />';
 	unset($data -> photo_url);
 }
 
-echo '<h3>@alias</h3>';
+echo '<h3>@' . $alias . '</h3>';
 
-if (!$data) {
+if (empty($data)) {
 
-	echo '<code>' . Helper::htmlOutput($string) . '</code>';
+	echo '<code>No data</code>';
 
 } else {
 
 	foreach ($data as $key => $value) {
 
 		$flag = '';
+
+		if(!is_string($key) || !is_string($value)) {
+			continue;
+		}
+
+		$key = (string) $key;
+		$value = (string) $value;
 
 		if ($key == 'country') {
 
